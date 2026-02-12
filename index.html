@@ -14,9 +14,14 @@
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background: linear-gradient(180deg, #eef5ff 0%, var(--bg) 55%, #fff 100%);
-      color:var(--text);
+        margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.82)),
+    url('./assets/bg.webp') no-repeat center center fixed;
+  background-size: cover;
+  color:#fff;
+
     }
     .wrap{max-width: 740px; margin: 0 auto; padding: 16px 14px 90px;}
     .topbar{
@@ -40,14 +45,12 @@
       background:#111827; color:#fff; padding:6px 10px; border-radius:999px;
       letter-spacing:.5px; font-variant-numeric: tabular-nums;
     }
-    .hero{
-      margin-top: 14px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px 16px;
-      text-align:left;
+    .hero, .section, .container, .card{
+  background: rgba(20,20,20,0.72);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.10);
+  color:#fff;
+}
     }
     .kicker{
       display:inline-flex; gap:8px; align-items:center;
@@ -427,4 +430,3 @@
   </script>
 </body>
 </html>
-
