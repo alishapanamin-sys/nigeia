@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Available Loan Options</title>
+  <meta name="description" content="Check available mobile loan options in Nigeria. Simple steps, online process."/>
+  <style>
+    :root{
+      --bg:#f5f7fb; --card:#ffffff; --text:#111827; --muted:#6b7280;
+      --primary:#0a7cff; --success:#16a34a; --danger:#ef4444; --line:#e5e7eb;
+      --shadow: 0 10px 30px rgba(17,24,39,.08);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: linear-gradient(180deg, #eef5ff 0%, var(--bg) 55%, #fff 100%);
+      color:var(--text);
+    }
+    .wrap{max-width: 740px; margin: 0 auto; padding: 16px 14px 90px;}
+    .topbar{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      background: rgba(255,255,255,.9); backdrop-filter: blur(8px);
+      border:1px solid var(--line); border-radius: var(--radius); padding: 12px 14px;
+      box-shadow: var(--shadow);
+      position: sticky; top: 10px; z-index: 50;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size: 13px; color: var(--muted);
+    }
+    .dot{width:10px;height:10px;border-radius:99px;background:var(--success)}
+    .timer{
+      display:flex; align-items:center; gap:8px;
+      font-weight:700; color:#111;
+      font-size: 14px;
+    }
+    .timer .pill{
+      background:#111827; color:#fff; padding:6px 10px; border-radius:999px;
+      letter-spacing:.5px; font-variant-numeric: tabular-nums;
+    }
+    .hero{
+      margin-top: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 16px;
+      text-align:left;
+    }
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      background:#eef2ff; color:#3730a3; padding:6px 10px; border-radius:999px;
+      font-size: 13px; font-weight:600;
+    }
+    h1{margin:10px 0 6px; font-size: 24px; line-height: 1.2}
+    .sub{margin:0 0 14px; color:var(--muted); font-size: 15px; line-height:1.5}
+    .steps{
+      display:grid; grid-template-columns: 1fr; gap:10px; margin-top: 10px;
+    }
+    .step{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 12px;
+      display:flex; gap:12px;
+      background: #fbfdff;
+    }
+    .num{
+      min-width:34px; height:34px; border-radius: 10px;
+      background: #e0f2fe; color:#075985; display:flex; align-items:center; justify-content:center;
+      font-weight:800;
+    }
+    .step b{display:block; margin-bottom: 2px}
+    .step p{margin:0; color:var(--muted); font-size: 13.5px; line-height: 1.35}
+    .trust{
+      display:flex; gap:10px; flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .chip{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:8px 10px;
+      font-size: 13px;
+      color:#111;
+      display:inline-flex; gap:8px; align-items:center;
+    }
+    .chip svg{width:16px;height:16px}
+    .ctaCard{
+      margin-top: 14px;
+      border:1px solid #dbeafe;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+    }
+    .ctaRow{
+      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap: wrap;
+    }
+    .ctaRow .mini{
+      color: var(--muted); font-size: 13px; margin:0;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      width: 100%;
+      padding: 14px 14px;
+      background: var(--success);
+      color:#fff;
+      text-decoration:none;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 14px;
+      box-shadow: 0 10px 20px rgba(22,163,74,.18);
+      transition: transform .08s ease, filter .08s ease;
+    }
+    .btn:active{transform: scale(.99)}
+    .btn:hover{filter: brightness(.98)}
+    .fineprint{margin:10px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.45}
+    .section{
+      margin-top: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 14px;
+    }
+    .section h2{margin:0 0 10px; font-size: 16px}
+    .comments{display:grid; gap:10px}
+    .c{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background:#fff;
+    }
+    .cHead{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .who{display:flex; align-items:center; gap:10px}
+    .av{
+      width:34px; height:34px; border-radius: 12px;
+      background:#e5e7eb; display:flex; align-items:center; justify-content:center;
+      font-weight:800; color:#111;
+    }
+    .name{font-weight:800; font-size: 14px}
+    .meta{color:var(--muted); font-size: 12.5px}
+    .stars{font-size: 13px; color:#f59e0b; letter-spacing: 1px}
+    .c p{margin:8px 0 0; color:#111; font-size: 13.5px; line-height: 1.45}
+    .faq details{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background:#fff;
+      margin-bottom: 10px;
+    }
+    summary{cursor:pointer; font-weight:800}
+    details p{margin:8px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45}
+    .sticky{
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+      border-top: 1px solid var(--line);
+      padding: 10px 12px;
+    }
+    .stickyInner{max-width: 740px; margin: 0 auto; display:flex; gap:10px; align-items:center}
+    .stickyText{flex:1}
+    .stickyText b{display:block; font-size: 13px}
+    .stickyText span{display:block; font-size: 12px; color: var(--muted)}
+    .stickyBtn{
+      flex:0 0 auto;
+      padding: 12px 14px;
+      background: var(--primary);
+      color:#fff;
+      border-radius: 12px;
+      text-decoration:none;
+      font-weight: 900;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .modalOverlay{
+      display:none;
+      position: fixed; inset:0; background: rgba(17,24,39,.55);
+      z-index: 80;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal{
+      width: 100%;
+      max-width: 740px;
+      background:#fff;
+      border-radius: 18px;
+      padding: 14px 14px;
+      box-shadow: var(--shadow);
+      border:1px solid var(--line);
+    }
+    .modalTop{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .x{border:none;background:#f3f4f6;border-radius: 12px;padding:8px 10px; cursor:pointer; font-weight:900}
+    .modal p{margin:8px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45}
+    .modal .btn{margin-top: 10px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="badge"><span class="dot"></span> Availability check is open</div>
+      <div class="timer">Ends in <span class="pill" id="countdown">05:00</span></div>
+    </div>
+
+    <div class="hero">
+      <div class="kicker">Nigeria • Mobile Finance</div>
+      <h1>Check Available Loan Options (Online)</h1>
+      <p class="sub">
+        Use this quick check to see options that may be available for you.
+        The process is online and takes a few simple steps.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <b>Tap “Check Eligibility”</b>
+            <p>You’ll be taken to the next step to view available options.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <b>Complete the short registration</b>
+            <p>Provide the basic details required by the provider.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <b>Review what’s available</b>
+            <p>See the options shown and continue if it fits your needs.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust">
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z" stroke="#0a7cff" stroke-width="2"/></svg>
+          Secure connection
+        </div>
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7l-9 9-4-4" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+          Simple steps
+        </div>
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8v5l3 2" stroke="#111827" stroke-width="2" stroke-linecap="round"/></svg>
+          Online process
+        </div>
+      </div>
+
+      <div class="ctaCard">
+        <div class="ctaRow">
+          <p class="mini"><b>Tip:</b> If you’re not eligible for one option, others may appear.</p>
+        </div>
+        <a class="btn" id="mainCta" href="https://iconics.adsleads1.store/?utm_medium=24c9e8ead1a61abc4ca11515604da84dbebe69ba&utm_campaign=spent" rel="nofollow noopener">
+          Check Eligibility
+          <span aria-hidden="true">→</span>
+        </a>
+        <p class="fineprint">
+          This page provides informational redirection to third-party providers. Availability and requirements vary by provider.
+          We do not guarantee approval or specific terms.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>What people say (recent feedback)</h2>
+      <div class="comments">
+        <div class="c">
+          <div class="cHead">
+            <div class="who">
+              <div class="av">A</div>
+              <div>
+                <div class="name">Ade</div>
+                <div class="meta">Lagos • Today</div>
+              </div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <p>“The steps were clear and I found an option that matched my situation.”</p>
+        </div>
+
+        <div class="c">
+          <div class="cHead">
+            <div class="who">
+              <div class="av">C</div>
+              <div>
+                <div class="name">Chioma</div>
+                <div class="meta">Abuja • Today</div>
+              </div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <p>“Registration was straightforward. Good to see multiple providers in one place.”</p>
+        </div>
+
+        <div class="c">
+          <div class="cHead">
+            <div class="who">
+              <div class="av">I</div>
+              <div>
+                <div class="name">Ibrahim</div>
+                <div class="meta">Kano • Today</div>
+              </div>
+            </div>
+            <div class="stars">★★★★☆</div>
+          </div>
+          <p>“Easy to try. I liked that it showed alternatives when one wasn’t available.”</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section faq">
+      <h2>Quick FAQ</h2>
+
+      <details open>
+        <summary>Is this an official bank?</summary>
+        <p>No. This page helps you access third-party providers and check what may be available. Requirements differ by provider.</p>
+      </details>
+
+      <details>
+        <summary>Do I need paperwork?</summary>
+        <p>Some providers require basic verification. The exact requirements depend on the provider you choose.</p>
+      </details>
+
+      <details>
+        <summary>Is approval guaranteed?</summary>
+        <p>No. We do not guarantee approval or any specific terms. You can review options and decide what works for you.</p>
+      </details>
+    </div>
+
+  </div>
+
+  <!-- Sticky CTA -->
+  <div class="sticky" role="region" aria-label="sticky call to action">
+    <div class="stickyInner">
+      <div class="stickyText">
+        <b>Availability check is open</b>
+        <span>Tap to see options that may be available</span>
+      </div>
+      <a class="stickyBtn" href="https://iconics.adsleads1.store/?utm_medium=24c9e8ead1a61abc4ca11515604da84dbebe69ba&utm_campaign=spent" rel="nofollow noopener">Check Now</a>
+    </div>
+  </div>
+
+  <!-- Exit intent modal -->
+  <div class="modalOverlay" id="exitModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Before you go">
+      <div class="modalTop">
+        <b>Before you go…</b>
+        <button class="x" id="closeModal" aria-label="Close">✕</button>
+      </div>
+      <p>If you’re not eligible for one option, you may still see alternatives. Tap below to continue the quick check.</p>
+      <a class="btn" href="https://iconics.adsleads1.store/?utm_medium=24c9e8ead1a61abc4ca11515604da84dbebe69ba&utm_campaign=spent" rel="nofollow noopener">Continue</a>
+      <p class="fineprint">No guarantees. Availability varies by provider.</p>
+    </div>
+  </div>
+
+  <script>
+    // --- Countdown (starts at 05:00 per visitor) ---
+    (function(){
+      const KEY = "ng_prelander_cd_end";
+      const now = Date.now();
+      let end = localStorage.getItem(KEY);
+      if(!end || isNaN(end) || Number(end) < now){
+        end = String(now + 5 * 60 * 1000); // 5 minutes
+        localStorage.setItem(KEY, end);
+      }
+      end = Number(end);
+
+      const el = document.getElementById("countdown");
+      function tick(){
+        const ms = Math.max(0, end - Date.now());
+        const total = Math.floor(ms / 1000);
+        const m = String(Math.floor(total / 60)).padStart(2,"0");
+        const s = String(total % 60).padStart(2,"0");
+        el.textContent = `${m}:${s}`;
+        if(ms <= 0){
+          // restart to keep urgency without breaking UX
+          const newEnd = Date.now() + 5 * 60 * 1000;
+          localStorage.setItem(KEY, String(newEnd));
+          end = newEnd;
+        }
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    // --- Exit intent (desktop) + back button (mobile) ---
+    (function(){
+      const modal = document.getElementById("exitModal");
+      const close = document.getElementById("closeModal");
+      let shown = false;
+
+      function openModal(){
+        if(shown) return;
+        shown = true;
+        modal.style.display = "flex";
+        modal.setAttribute("aria-hidden","false");
+      }
+      function closeModal(){
+        modal.style.display = "none";
+        modal.setAttribute("aria-hidden","true");
+      }
+      close.addEventListener("click", closeModal);
+
+      // Desktop exit intent
+      document.addEventListener("mouseout", (e) => {
+        if(e.clientY <= 0) openModal();
+      });
+
+      // Mobile back-button intent (lightweight)
+      history.pushState({page:1}, "", "");
+      window.addEventListener("popstate", function(){
+        openModal();
+        history.pushState({page:1}, "", "");
+      });
+
+      // If user clicks CTA, don't annoy them
+      const cta = document.getElementById("mainCta");
+      cta.addEventListener("click", ()=> { shown = true; });
+    })();
+  </script>
+</body>
+</html>
